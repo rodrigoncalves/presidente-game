@@ -17,32 +17,28 @@ export default function Login() {
   }
 
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col-12 p-2">
-          <form className="box text-center" onSubmit={handleSubmit(login)}>
-            <h1 className="">Presidente</h1>
-            <p className="error-message">{errors.nick && errors.nick.message}</p>
-            <input
-              name="nick"
-              className="input-default mb-4"
-              placeholder="Digite seu Nickname..."
-              value={nick}
-              onChange={e => {
-                const value = e.target.value
-                if (value.length <= 20) {
-                  setNick(value)
-                }
-              }}
-              ref={register({ required: 'Campo obrigatório' })}
-            />
-            <button className="btn-black mb-2" type="submit">
-              Entrar
-            </button>
-          </form>
-          <img className="img" src={cards} alt="Cards" />
-        </div>
-      </div>
+    <div className="col-12 p-2">
+      <form className="game-border text-center" onSubmit={handleSubmit(login)}>
+        <h1 className="">Presidente</h1>
+        <p className="error-message">{errors.nick && errors.nick.message}</p>
+        <input
+          name="nick"
+          className="input-default mb-4"
+          placeholder="Digite seu Nickname..."
+          value={nick}
+          onChange={e => {
+            const value = e.target.value
+            if (value.length <= 20) {
+              setNick(value)
+            }
+          }}
+          ref={register({ required: 'Campo obrigatório' })}
+        />
+        <button className="btn-black mb-2" type="submit">
+          Entrar
+        </button>
+      </form>
+      <img className="img" src={cards} alt="Cards" />
     </div>
   )
 }

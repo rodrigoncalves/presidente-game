@@ -1,16 +1,4 @@
-.container {
-  background: url('../assets/pool_table.png');
-  min-height: 100vh;
-  width: 100%;
-  position: absolute;
-}
-
-.row {
-  display: flex;
-  justify-content: center;
-}
-
-.box {
+.game-border {
   align-items: center;
   display: flex;
   flex-direction: column;
