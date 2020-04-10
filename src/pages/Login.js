@@ -5,12 +5,12 @@ import './Login.css'
 import cards from '../assets/cards-home.png'
 
 export default function Login() {
-  const [nick, setNick] = useState('')
+  const savedNick = localStorage.getItem('nick')
+  const [nick, setNick] = useState(savedNick)
   const history = useHistory()
 
   const handleSubmit = event => {
     event.preventDefault()
-    console.log(event)
     if (nick) {
       localStorage.setItem('nick', nick)
     }
@@ -26,6 +26,7 @@ export default function Login() {
             <input
               className="input-default mb-4"
               placeholder="Digite seu Nickname..."
+              value={nick}
               onChange={e => setNick(e.target.value)}
             />
             <button className="btn-black mb-2" type="submit">
