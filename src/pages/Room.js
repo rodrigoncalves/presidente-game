@@ -1,6 +1,16 @@
 import React from 'react'
+import { rootRef } from '../firebase/firebase'
 
-export default function Room(props) {
+import './Room.css'
+
+export default function Room() {
   const nick = localStorage.getItem('nick')
-  return <div>{nick}</div>
+  rootRef.on('value', snap => {
+    console.log(snap)
+  })
+  return (
+    <div>
+      <p>{nick}</p>
+    </div>
+  )
 }
