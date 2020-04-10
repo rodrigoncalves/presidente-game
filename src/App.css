@@ -6,9 +6,9 @@
 
 html,
 body {
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
 }
 
 .container {
@@ -25,13 +25,13 @@ body {
 
 .box {
   align-items: center;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: center;
-    border: 3px solid rgba(0, 0, 0, 0.45);
-    box-sizing: border-box;
-    border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  border: 3px solid rgba(0, 0, 0, 0.45);
+  box-sizing: border-box;
+  border-radius: 10px;
 }
 
 .container h1 {
@@ -73,9 +73,9 @@ body {
 }
 
 .img {
-    position: absolute;
-    bottom: -62vh;
-    left: -34px;
+  position: absolute;
+  bottom: -62vh;
+  left: -34px;
 }
 
 @media (min-width: 576px) {
