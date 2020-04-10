@@ -6,14 +6,14 @@ import './Login.css'
 import cards from '../assets/cards-home.png'
 
 export default function Login() {
-  const savedNick = localStorage.getItem('nick')
+  const savedNick = localStorage.getItem('nick') || ''
   const [nick, setNick] = useState(savedNick)
   const history = useHistory()
   const { handleSubmit, register, errors } = useForm()
 
   const login = ({ nick }) => {
     localStorage.setItem('nick', nick)
-    history.push('/room', { nick })
+    history.push('/room')
   }
 
   return (

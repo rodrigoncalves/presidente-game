@@ -1,5 +1,6 @@
 import React from 'react'
 
-export default function Room() {
-  return <div></div>
+export default function Room(props) {
+  const nick = localStorage.getItem('nick')
+  return <div>{nick}</div>
 }
