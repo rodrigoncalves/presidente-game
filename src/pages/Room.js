@@ -7,6 +7,7 @@ import { useState } from 'react'
 export default function Room() {
   const nick = localStorage.getItem('nick')
   const [roomKey, setRoomKey] = useState('')
+  const [users, setUsers] = useState([])
 
   // get room key
   useEffect(() => {
@@ -30,7 +31,10 @@ export default function Room() {
   useEffect(() => {
     if (roomKey) {
       const userRef = rootRef.child(`rooms/${roomKey}/users/${nick}`)
-      userRef.set({ createAt: new Date().getTime() })
+      userRef.set({
+        createAt: new Date().getTime(),
+        nick,
+      })
       const setOffline = () => userRef.remove()
       window.addEventListener('beforeunload', setOffline)
       return () => {
@@ -39,10 +43,27 @@ export default function Room() {
     }
   }, [nick, roomKey])
 
+  // get users online
+  useEffect(() => {
+    if (roomKey) {
+      const usersRef = rootRef.child(`rooms/${roomKey}/users`)
+      usersRef.on('value', snap => {
+        const users = []
+        snap.forEach(s => {
+          users.push(s.val())
+        })
+        setUsers(users)
+      })
+    }
+  }, [roomKey])
+
   return (
     <div>
       <p>{nick}</p>
       <p>{roomKey}</p>
+      {users.map(u => (
+        <p key={u.nick}>{u.nick}</p>
+      ))}
     </div>
   )
 }
