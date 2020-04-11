@@ -7,7 +7,7 @@ import { useState } from 'react'
 export default function Room() {
   const nick = localStorage.getItem('nick')
   const [roomKey, setRoomKey] = useState('')
-  const [users, setUsers] = useState([])
+  const [players, setPlayers] = useState([])
 
   // get room key
   useEffect(() => {
@@ -27,15 +27,15 @@ export default function Room() {
     )
   })
 
-  // set user online
+  // set player online
   useEffect(() => {
     if (roomKey) {
-      const userRef = rootRef.child(`rooms/${roomKey}/users/${nick}`)
-      userRef.set({
+      const playerRef = rootRef.child(`rooms/${roomKey}/players/${nick}`)
+      playerRef.set({
         createAt: new Date().getTime(),
         nick,
       })
-      const setOffline = () => userRef.remove()
+      const setOffline = () => playerRef.remove()
       window.addEventListener('beforeunload', setOffline)
       return () => {
         window.removeEventListener('beforeunload', setOffline)
@@ -43,16 +43,16 @@ export default function Room() {
     }
   }, [nick, roomKey])
 
-  // get users online
+  // get players online
   useEffect(() => {
     if (roomKey) {
-      const usersRef = rootRef.child(`rooms/${roomKey}/users`)
-      usersRef.on('value', snap => {
-        const users = []
+      const playersRef = rootRef.child(`rooms/${roomKey}/players`)
+      playersRef.on('value', snap => {
+        const players = []
         snap.forEach(s => {
-          users.push(s.val())
+          players.push(s.val())
         })
-        setUsers(users)
+        setPlayers(players)
       })
     }
   }, [roomKey])
@@ -61,7 +61,7 @@ export default function Room() {
     <div>
       <p>{nick}</p>
       <p>{roomKey}</p>
-      {users.map(u => (
+      {players.map(u => (
         <p key={u.nick}>{u.nick}</p>
       ))}
     </div>
