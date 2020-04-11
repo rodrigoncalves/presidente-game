@@ -6,7 +6,7 @@ import Routes from './routes'
 
 export default () => (
   <div className="container">
-    <div className="row">
+    <div className="row game-border">
       <Routes />
     </div>
   </div>
