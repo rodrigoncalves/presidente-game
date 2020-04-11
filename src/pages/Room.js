@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { rootRef, database } from '../firebase/firebase'
 import { useHistory } from 'react-router-dom'
+import Moment from 'moment'
 
 import './Room.css'
 
@@ -8,8 +9,11 @@ export default function Room() {
   const savedNick = localStorage.getItem('nick')
   const [nick, setNick] = useState(savedNick)
   const [roomKey, setRoomKey] = useState('')
-  const [playersSnap, setPlayersSnap] = useState([])
+  const [players, setPlayers] = useState([])
   const [key, setKey] = useState('')
+  const [startedAt, setStartedAt] = useState(null)
+  const [now, setNow] = useState(new Date())
+
   const history = useHistory()
 
   // get room key
@@ -71,18 +75,38 @@ export default function Room() {
         snap.forEach(s => {
           players.push(s)
         })
-        setPlayersSnap(players)
+        setPlayers(players)
       })
     }
   }, [roomKey])
+
+  const startGame = () => {
+    const roomRef = rootRef.child(`rooms/${roomKey}`)
+    roomRef.on('value', snap => {
+      setStartedAt(snap.val().startedAt)
+    })
+    const now = new Date()
+    setNow(now)
+    roomRef.update({ startedAt: now.getTime() }).then(_ => {
+      setInterval(() => {
+        setNow(new Date())
+      }, 1000)
+    })
+  }
 
   return (
     <div>
       <p>{nick}</p>
       <p>{roomKey}</p>
-      {playersSnap.map(player => (
+      {players.map(player => (
         <p key={player.key}>{player.val().nick}</p>
       ))}
+      <p>{startedAt ? Moment(new Date(now.getTime() - startedAt)).format('mm:ss') : '00:00'}</p>
+      {players.length ? (
+        <button className="btn btn-light" onClick={startGame}>
+          Iniciar jogo
+        </button>
+      ) : null}
     </div>
   )
 }
