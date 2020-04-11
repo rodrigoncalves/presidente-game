@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { rootRef, database } from '../firebase/firebase'
+import { useHistory } from 'react-router-dom'
 
 import './Room.css'
 
@@ -9,6 +10,7 @@ export default function Room() {
   const [roomKey, setRoomKey] = useState('')
   const [playersSnap, setPlayersSnap] = useState([])
   const [key, setKey] = useState('')
+  const history = useHistory()
 
   // get room key
   useEffect(() => {
@@ -42,14 +44,23 @@ export default function Room() {
           })
 
           setKey(playerRef.key)
+
+          // on nick changed
           playerRef.on('child_changed', snap => {
             setNick(snap.val())
           })
+
+          // on player kicked
+          playerRef.on('child_removed', _ => {
+            history.push('/')
+          })
+
+          // on player offline
           playerRef.onDisconnect().remove()
         }
       })
     }
-  }, [roomKey, nick, key])
+  }, [roomKey, nick, key, history])
 
   // get players online
   useEffect(() => {
