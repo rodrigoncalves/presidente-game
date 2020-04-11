@@ -5,6 +5,8 @@ import Moment from 'moment'
 
 import './Room.css'
 
+const MIN_PLAYERS = 1
+
 export default function Room() {
   const savedNick = localStorage.getItem('nick')
   const [nick, setNick] = useState(savedNick)
@@ -76,6 +78,12 @@ export default function Room() {
           players.push(s)
         })
         setPlayers(players)
+
+        // insufficient players
+        if (players.length < MIN_PLAYERS) {
+          const roomRef = rootRef.child(`rooms/${roomKey}`)
+          roomRef.update({ startedAt: null })
+        }
       })
     }
   }, [roomKey])
@@ -94,6 +102,13 @@ export default function Room() {
     })
   }
 
+  const finishGame = () => {
+    const roomRef = rootRef.child(`rooms/${roomKey}`)
+    roomRef.update({ startedAt: null }).then(_ => {
+      setStartedAt(null)
+    })
+  }
+
   return (
     <div>
       <p>{nick}</p>
@@ -102,9 +117,15 @@ export default function Room() {
         <p key={player.key}>{player.val().nick}</p>
       ))}
       <p>{startedAt ? Moment(new Date(now.getTime() - startedAt)).format('mm:ss') : '00:00'}</p>
-      {players.length ? (
+      {players.length >= MIN_PLAYERS && !startedAt ? (
         <button className="btn btn-light" onClick={startGame}>
           Iniciar jogo
+        </button>
+      ) : null}
+
+      {startedAt ? (
+        <button className="btn btn-light" onClick={finishGame}>
+          Terminar jogo
         </button>
       ) : null}
     </div>
