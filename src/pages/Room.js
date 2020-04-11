@@ -4,6 +4,8 @@ import { useHistory } from 'react-router-dom'
 
 import './Room.css'
 
+import userimg from '../assets/img/user.png'
+
 export default function Room() {
   const savedNick = localStorage.getItem('nick')
   const [nick, setNick] = useState(savedNick)
@@ -77,12 +79,38 @@ export default function Room() {
   }, [roomKey])
 
   return (
-    <div>
-      <p>{nick}</p>
-      <p>{roomKey}</p>
-      {playersSnap.map(player => (
-        <p key={player.key}>{player.val().nick}</p>
-      ))}
+    <div className="base-game">
+      <div className="row justify-content-around">
+        {/* São todos os outros jogadores */}
+        <div className="other-player text-center">
+          <div className="d-flex m-2">
+            <img
+              className="img-player m-2 d-flex align-self-center"
+              src={userimg}
+              alt="user icon"
+            />
+            <div className="card m-1">
+              <div className="card-inside">
+                <p className="number">12</p>
+              </div>
+            </div>
+          </div>
+          <p className="name-player">Nome do usuário</p>
+          <p className="position-player">Presidente</p>
+        </div>
+      </div>
+
+      <div className="play">Jogadas</div>
+
+      {/* Jogador principal */}
+      <div className="main-player col-12 fixed-bottom">
+        <div className=" col-2 text-center">
+          <img className="img-player" src={userimg} alt="user icon" />
+          <p className="name-player">{nick}</p>
+          <p className="position-player">Presidente</p>
+        </div>
+        <div className=""></div>
+      </div>
     </div>
   )
 }
