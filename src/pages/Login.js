@@ -18,7 +18,7 @@ export default function Login() {
 
   return (
     <div className="col-12 p-2">
-      <form className=" text-center" onSubmit={handleSubmit(login)}>
+      <form className="game-border text-center" onSubmit={handleSubmit(login)}>
         <h1 className="">Presidente</h1>
         <p className="error-message">{errors.nick && errors.nick.message}</p>
         <input
