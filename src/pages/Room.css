@@ -1,3 +1,75 @@
-p {
+.base-game {
+  width: 100%;
+  height: 90vh;
+}
+
+.base-game p {
   color: white;
+  font-family: Roboto;
+  margin: 8px;
+}
+
+.other-player .card {
+  width: 42px;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  height: 57px;
+  background: linear-gradient(162.9deg, #ce0000 2.14%, #ff6565 101.15%);
+  box-shadow: 4px 5px 13px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+}
+
+.other-player .card .card-inside {
+  width: 36px;
+  height: 51px;
+  border: 1px solid #ffffff;
+  box-sizing: border-box;
+  border-radius: 5px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-inside .number {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 21px;
+  text-align: center;
+}
+
+.play {
+  height: 60%;
+  /* justify-items: center; */
+  align-items: center;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.img-player {
+  width: 34px;
+  height: 34px;
+  background-color: #fff;
+  border: 2px solid #ffffff;
+  box-sizing: border-box;
+  box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.25);
+  border-radius: 48px;
+}
+
+.name-player {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: center;
+}
+
+.position-player {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 14px;
 }

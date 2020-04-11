@@ -1,14 +1,3 @@
-.game-border {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: center;
-  border: 3px solid rgba(0, 0, 0, 0.45);
-  box-sizing: border-box;
-  border-radius: 10px;
-}
-
 .container h1 {
   color: white;
   font-size: 6rem;
@@ -50,8 +39,8 @@
 
 .img {
   position: absolute;
-  bottom: -62vh;
-  left: -34px;
+  bottom: -38vh;
+  left: -65px;
 }
 
 @media (min-width: 576px) {

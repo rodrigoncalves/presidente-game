@@ -10,15 +10,32 @@ body {
   width: 100%;
   height: 100%;
 }
-
-.container {
-  background: url('./assets/pool_table.png');
+.bg-img {
+  background: url(/static/media/pool_table.833a2cad.png);
   min-height: 100vh;
   width: 100%;
+}
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: absolute;
 }
 
 .row {
   display: flex;
   justify-content: center;
+}
+
+.game-border {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  border: 3px solid rgba(0, 0, 0, 0.45);
+  box-sizing: border-box;
+  border-radius: 10px;
+  height: 93vh;
+  width: 100%;
 }
