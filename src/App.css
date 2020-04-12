@@ -10,11 +10,13 @@ body {
   width: 100%;
   height: 100%;
 }
+
 .bg-img {
-  background: url(/static/media/pool_table.833a2cad.png);
+  background: url(./assets/pool_table.png);
   min-height: 100vh;
   width: 100%;
 }
+
 .container {
   display: flex;
   align-items: center;
