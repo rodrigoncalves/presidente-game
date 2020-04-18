@@ -56,8 +56,10 @@ export default function Room() {
           })
 
           // on player kicked
-          playerRef.on('child_removed', _ => {
-            history.push('/')
+          playerRef.on('child_removed', snap => {
+            if (snap.key !== 'intervalId') {
+              history.push('/')
+            }
           })
 
           // on player offline
@@ -88,18 +90,38 @@ export default function Room() {
     }
   }, [roomKey])
 
+  // observe when the game starts
+  useEffect(() => {
+    if (roomKey && key) {
+      const startedAtRef = rootRef.child(`rooms/${roomKey}/startedAt`)
+      const intervalIdRef = rootRef.child(`rooms/${roomKey}/players/${key}/intervalId`)
+      startedAtRef.on('value', snap => {
+        const startedAt = snap.val()
+        setStartedAt(startedAt)
+
+        intervalIdRef.once('value', snap => {
+          let intervalId = snap.val()
+          if (intervalId) {
+            clearInterval(intervalId)
+            intervalId = null
+          }
+          if (startedAt) {
+            const now = new Date()
+            setNow(now)
+
+            intervalId = setInterval(() => {
+              setNow(new Date())
+            }, 1000)
+          }
+          intervalIdRef.set(intervalId)
+        })
+      })
+    }
+  }, [roomKey, key])
+
   const startGame = () => {
     const roomRef = rootRef.child(`rooms/${roomKey}`)
-    roomRef.on('value', snap => {
-      setStartedAt(snap.val().startedAt)
-    })
-    const now = new Date()
-    setNow(now)
-    roomRef.update({ startedAt: now.getTime() }).then(_ => {
-      setInterval(() => {
-        setNow(new Date())
-      }, 1000)
-    })
+    roomRef.update({ startedAt: new Date().getTime() })
   }
 
   const finishGame = () => {
