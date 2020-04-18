@@ -21,18 +21,20 @@ export default function Room() {
   const history = useHistory()
 
   // get room key
-  const roomsRef = rootRef.child('rooms')
-  roomsRef.once('value').then(snap => {
-    if (!snap.exists()) {
-      const roomRef = roomsRef.push({ createdAt: new Date().getTime() })
-      setRoomKey(roomRef.key)
-    } else {
-      for (const key in snap.val()) {
-        setRoomKey(key)
-        break // only one room for now
+  useEffect(() => {
+    const roomsRef = rootRef.child('rooms')
+    roomsRef.once('value').then(snap => {
+      if (!snap.exists()) {
+        const roomRef = roomsRef.push({ createdAt: new Date().getTime() })
+        setRoomKey(roomRef.key)
+      } else {
+        for (const key in snap.val()) {
+          setRoomKey(key)
+          break // only one room for now
+        }
       }
-    }
-  })
+    })
+  }, [])
 
   // set player online
   useEffect(() => {
