@@ -116,19 +116,20 @@ export default function Room() {
       </p>
 
       <div className="btn-base">
-        {players.length >= MIN_PLAYERS && !startedAt ? (
+        {players.length >= MIN_PLAYERS && !startedAt && (
           <button className="btn btn-light" onClick={startGame}>
             Iniciar jogo
           </button>
-        ) : null}
+        )}
 
-        {startedAt ? (
+        {startedAt && (
           <button className="btn btn-light" onClick={finishGame}>
             Terminar jogo
           </button>
-        ) : null}
+        )}
       </div>
 
+      {/* Other players */}
       <div className="row justify-content-around">
         {players
           .filter(player => player.key !== key)
@@ -139,18 +140,17 @@ export default function Room() {
 
       <div className="game">Jogadas</div>
 
-      <div className="main-player col-12 fixed-bottom">
-        {players
-          .filter(player => player.key === key)
-          .map(player => (
-            <Player
-              key={player.key}
-              player={player.val()}
-              userimg={userimg}
-              cards={[1, 2, 3, 4, 5]}
-            />
-          ))}
-      </div>
+      {/* Current player */}
+      {players
+        .filter(player => player.key === key)
+        .map(player => (
+          <Player
+            key={player.key}
+            player={player.val()}
+            userimg={userimg}
+            cards={[1, 2, 3, 4, 5]}
+          />
+        ))}
     </div>
   )
 }
