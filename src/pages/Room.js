@@ -108,19 +108,24 @@ export default function Room() {
   }
 
   return (
-    <div className="base-game">
-      <p>{startedAt ? Moment(new Date(now.getTime() - startedAt)).format('mm:ss') : '00:00'}</p>
-      {players.length >= MIN_PLAYERS && !startedAt ? (
-        <button className="btn btn-light" onClick={startGame}>
-          Iniciar jogo
-        </button>
-      ) : null}
+    <div className="base-game col-12 no-gutters">
+      <p className="p-absolute">
+        {startedAt ? Moment(new Date(now.getTime() - startedAt)).format('mm:ss') : '00:00'}
+      </p>
 
-      {startedAt ? (
-        <button className="btn btn-light" onClick={finishGame}>
-          Terminar jogo
-        </button>
-      ) : null}
+      <div className="btn-base">
+        {players.length >= MIN_PLAYERS && !startedAt ? (
+          <button className="btn btn-light" onClick={startGame}>
+            Iniciar jogo
+          </button>
+        ) : null}
+
+        {startedAt ? (
+          <button className="btn btn-light" onClick={finishGame}>
+            Terminar jogo
+          </button>
+        ) : null}
+      </div>
 
       <div className="row justify-content-around">
         {players
@@ -130,7 +135,7 @@ export default function Room() {
           ))}
       </div>
 
-      <div className="play">Jogadas</div>
+      <div className="game">Jogadas</div>
 
       <div className="main-player col-12 fixed-bottom">
         {players
