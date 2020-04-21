@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { rootRef, database } from '../firebase/firebase'
+import { rootRef, database, functions } from '../firebase/firebase'
 import { useHistory } from 'react-router-dom'
 import Moment from 'moment'
 import userimg from '../assets/img/user.png'
@@ -120,8 +120,11 @@ export default function Room() {
   }, [roomKey, key])
 
   const startGame = () => {
-    const roomRef = rootRef.child(`rooms/${roomKey}`)
-    roomRef.update({ startedAt: new Date().getTime() })
+    functions
+      .httpsCallable('startGame')({ roomKey })
+      .then(({ data: { startedAt } }) => {
+        console.log('Game initialized: ', new Date(startedAt).toJSON())
+      })
   }
 
   const finishGame = () => {

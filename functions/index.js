@@ -1,13 +1,29 @@
 const functions = require('firebase-functions')
+const admin = require('firebase-admin')
 const cors = require('cors')({ origin: true })
 const fs = require('fs')
 const uuid = require('uuid-v4')
 const { Storage } = require('@google-cloud/storage')
+
 const storage = new Storage({
   projectId: 'lambe-b6c2d',
   keyFilename: 'lambe-key.json',
 })
 
+admin.initializeApp()
+const rootRef = admin.database().ref('/presidente')
+
+exports.startGame = functions.https.onCall((data, context) => {
+  const { roomKey } = data
+  const now = new Date().getTime()
+
+  rootRef.child(`/rooms/${roomKey}`).update({ startedAt: now })
+  return {
+    startedAt: now,
+  }
+})
+
+// ignore this function
 exports.uploadImage = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
     try {
